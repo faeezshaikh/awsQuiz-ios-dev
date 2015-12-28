@@ -1,0 +1,154 @@
+<ion-view view-title="Topics"> <ion-content>
+
+<hr />
+
+<div id="quiz">
+    <div class="center">
+        
+        <img height="80" width="80" ng-src="{{quiz.logo}}" /> 
+        <h1>{{quiz.name}}</h1>
+    </div>
+
+    <div class="center " ng-if="showTimer">
+        <button class="button button-outline button-positive center">
+
+            <i class="ion-android-alarm-clock larger "></i> &nbsp;
+            <timer countdown="timer" max-time-unit="'minute'" interval="1000" finish-callback="timerElapsed()">{{mminutes}} minute{{minutesS}}, {{sseconds}} second{{secondsS}}</timer>
+
+        </button>
+    </div>
+
+    <hr />
+    <div ng-show="mode.value=='quiz'">
+        <div class="card">
+            <div ng-repeat="question in filteredQuestions">
+                <div class="center label label-warning">Question {{currentPage}} of {{totalItems}}.</div>
+                <div class="item item-text-wrap item-divider ">{{currentPage}}. {{question.Name}}</div>
+
+                <div class="item item-text-wrap col-100">
+                    <div>
+                        <ul class="list">
+
+                            <div ng-repeat="option in question.Options">
+                                <li class="item item-checkbox"><label class="checkbox"> <input type="checkbox" id="{{option.Id}}" ng-model="option.Selected" ng-change="onSelect(question, option);">
+                                </label> {{option.Name}}</li>
+                            </div>
+
+                        </ul>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="item item-divider center">
+                <div>
+                    <!-- <button class="button button-positive" ng-show="config.allowBack" ng-click="goTo(1);">First</button> -->
+                    <button class="button button-positive" ng-show="config.allowBack && currentPage!=1" ng-click="goTo(currentPage - 1);">Prev</button>
+                    <button class="button button-positive" ng-hide="currentPage == totalItems" ng-click="goTo(currentPage + 1);">Next</button>
+                    <!-- <button class="button button-positive" ng-show="config.allowBack" ng-click="goTo(totalItems);">Last</button> -->
+                </div>
+                <br />
+                <pagination ng-show="config.showPager" direction-links="false" total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" ng-change="pageChanged()"></pagination>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<div class="review" ng-show="mode.value=='review'">
+    
+    <bold>Press the button to go the appropriate question</bold>
+    <p></p>
+
+    <div ng-repeat="question in questions">
+        <div ng-click="goTo($index + 1)" class="{{ isAnswered($index) == 'Answered'? 'answered': 'not-answered' }}">{{$index + 1}}. {{ isAnswered($index) }}</div>
+    </div>
+</div>
+
+<div class="result" ng-show="mode.value=='result'">
+
+<div class="list card">
+
+  <div class="item item-avatar">
+   
+         <img height="150" width="150" ng-src="data/img/exam.jpg" >
+        <p>Score card</p>
+        <h2>{{verdict}}</h2>
+   
+  </div>
+
+  <div class="item item-body">
+
+    <div class="row">
+      <div class="col col-80">Total Questions</div>
+      <div class="col col-20">{{totalQues}}</div>
+    </div>
+
+    <div class="row">
+      <div class="col col-80">Correct Answers</div>
+      <div class="col col-20">{{totalQues - wrong}}</div>
+    </div>
+
+    <div class="row">
+      <div class="col col-80">Incorrect Answers</div>
+      <div class="col col-20">{{wrong}}</div>
+    </div>
+
+  <div class="row">
+      <div class="col col-80">Total</div>
+      <div class="col col-20"><strong>{{score}} %</strong></div>
+    </div>
+     <div class="row">
+      <div class="col col-80"><strong>Result</strong></div>
+      <div class="col col-20"><strong>{{verdict}}</strong></div>
+    </div>
+   <hr/>
+    <!-- <img class="full-image" height="150" width="100" ng-src="data/img/table.jpg"> -->
+    <p class="center">
+        
+          <button class="button button-positive" ng-click="closeResults()">Close</button>
+    </p>
+    
+  </div>
+ </div>
+
+
+
+    <p class="center">
+        The correct answers are highlighted in green.
+    </p>
+    <div ng-repeat="question in questions">
+        <div class="result-question">
+            <h3>{{$index + 1}}. {{question.Name}}</h3>
+            <div class="result-options">
+                <div ng-repeat="Option in question.Options">
+                    <label ng-click="onSelect(Option);" class="{{  Option.IsAnswer ? 'result-correct': 'result-incorrect' }}"> <input id="{{Option.Id}}" type="checkbox" disabled="disabled"
+                        readonly="readonly" ng-model="Option.Selected" /> {{Option.Name}}
+                    </label>
+                </div>
+            </div>
+            </h4>
+            <p></p>
+            <button class="button  {{ isCorrect(question) == 'Correct'? 'button-balanced': 'button-assertive'}}">{{isCorrect(question)}} answer.</button>
+
+        </div>
+    </div>
+    <div class="center">
+        <button class="button button-positive" ng-click="closeResults()">Close</button>
+    </div>
+    
+
+</div>
+
+<hr />
+<div class="center" ng-show="mode.value!='result'">
+    <!-- <button class="button button-positive" ng-click="mode.value = 'quiz'">Quiz</button> -->
+    <button class="button button-positive" ng-hide="mode.value=='review'" ng-click="mode.value = 'review'">Review</button>
+    <button class="button button-positive" ng-click="onSubmit();">Submit Quiz</button>
+</div>
+</ion-content> </ion-view>

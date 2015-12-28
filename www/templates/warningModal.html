@@ -1,0 +1,69 @@
+<ion-modal-view>
+  <ion-header-bar class="bar-positive">
+
+  </ion-header-bar>
+  <ion-content>
+<div class="list card">
+
+  <div class="item item-avatar">
+     <img height="150" width="150" ng-src="data/img/exam.jpg" >
+    <h2>{{bigExam == 'big' ? 'Certification Exam' : 'Practice Exam'}}</h2>
+    
+    <p>{{bigExam == 'big' ? '40 questions, 55 minutes' : '30 questions, 40 minutes'}}</p>
+    
+  </div>
+
+  <div class="item item-body">
+
+    <div class="row">
+      <div class="col col-80">AWS Fundamentals</div>
+      <div class="col col-20">10%</div>
+    </div>
+
+    <div class="row">
+      <div class="col col-80">Design and Development</div>
+      <div class="col col-20">40%</div>
+    </div>
+
+    <div class="row">
+      <div class="col col-80">Deployment and Security</div>
+      <div class="col col-20">30%</div>
+    </div>
+
+    <div class="row">
+      <div class="col col-80">Debugging</div>
+      <div class="col col-20">20%</div>
+    </div>
+
+  <div class="row">
+      <div class="col col-80"><strong>Total</strong></div>
+      <div class="col col-20"><strong>100%</strong></div>
+    </div>
+   
+    <!-- <img class="full-image" height="150" width="100" ng-src="data/img/table.jpg"> -->
+    <p>
+     
+
+      This is a timed exam. You cannot turn the timer off for the practice exams.
+      The AWS certification exam contains 60 questions and you are given 80 minutes. Based on that on average you have 1.3 minutes for 
+      each question. These practice exams contain a mix of questions from all topics that you are expected to know for the certification exam.
+      Good luck.
+    </p>
+    
+  </div>
+  <div class="center">
+
+<button class="button button-positive" ng-click="startPracticeExam()">
+ Start Practice Exam
+</button>
+<button class="button button-positive" ng-click="closeWarning()">
+ Cancel
+</button>
+</div>
+
+
+</div>
+
+
+  </ion-content>
+</ion-modal-view>
